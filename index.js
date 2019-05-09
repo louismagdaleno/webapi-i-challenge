@@ -23,6 +23,23 @@ server.get('/api/users', (req, res) => {
         });
 });
 
+server.post("/api/users/", (req, res) => {
+    if (!req.body.name || !req.body.bio) {
+      res
+        .status(400)
+        .json({ message: "Please provide name and bio for the user." });
+    } else
+      db.insert(req.body)
+        .then(newUser => res.status(201).json(newUser))
+        .catch(err =>
+          res
+            .status(500)
+            .json({
+              message: "There was an error while saving the user to the database."
+            })
+        );
+  });
+
 server.get('/api/users/:id', (req, res) => {
 	const { id } = req.params;
 
