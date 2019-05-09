@@ -8,8 +8,8 @@ server.get('/', (req, res) => {
     res.send('Hello from Express');
 });
 
-server.listen(5000, () => 
-console.log('Server running on http://localhost:5000')
+server.listen(8080, () => 
+console.log('Server running on http://localhost:8080')
 );
 
 server.get('/api/users', (req, res) => {
