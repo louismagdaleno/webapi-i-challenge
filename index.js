@@ -54,3 +54,19 @@ server.get('/api/users/:id', (req, res) => {
 		})
 		.catch((err) => res.status(500).json({ message: `Can't get user data!!` }));
 });
+
+server.delete("/api/users/:id", (req, res) => {
+    const { id } = req.params;
+  
+    db.remove(id)
+      .then(user => {
+        if (!user)
+          res
+            .status(404)
+            .json({ message: "The user with the specified ID does not exists." });
+        else res.json(user);
+      })
+      .catch(err =>
+        res.status(500).json({ message: "The user could not be removed." })
+      );
+  });
