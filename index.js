@@ -70,3 +70,30 @@ server.delete("/api/users/:id", (req, res) => {
         res.status(500).json({ message: "The user could not be removed." })
       );
   });
+
+  server.put("/api/users/:id", (req, res) => {
+    const { id } = req.params;
+  
+    if (!req.body.name && !req.body.bio) {
+      console.log("Wrong info");
+      res
+        .status(400)
+        .json({ errorMessage: "Please provide a name or bio for the user." });
+    } else
+      db.update(id, req.body)
+        .then(user => {
+          console.log("In request");
+          if (!user)
+            res
+              .status(404)
+              .json({
+                message: "The user with the specified ID does not exists. "
+              });
+          res.json(user);
+        })
+        .catch(err =>
+          res
+            .status(500)
+            .json({ error: "The user information could not be modified." })
+        );
+  });
